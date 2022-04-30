@@ -1,34 +1,34 @@
-import React, { useState, useEffect } from 'react';
-import { getAsetsCompare } from '../../services/asets-services';
+import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import { Line } from 'react-chartjs-2';
-import { Chart as ChartJS} from 'chart.js/auto';
+import { Chart as ChartJS } from 'chart.js/auto';
+import { getAssetHistoryValues, getAssetInformation, getAssetsIcon } from '../../services/assets.services';
+import * as Constants from '../../constants';
 
-const Table = () => {
-  const [dataTable, setDataTable] = useState();
-  const getData = async () => {
-    const data = await getAsetsCompare();
-    setDataTable(data);
-  };
+const Table = ({ asset }) => {
+  const [assetData, setAssetData] = useState([{}]);
+  const [dataTable, setDataTable] = useState({ labels: [], datasets: [{ label: asset, data: [] }] });
+
   useEffect(() => {
-    getData();
+    getAssetInformation(asset).then((resp) => setAssetData(resp));
+    getAssetHistoryValues(asset, Constants.timeInterval.WEEK)
+      .then((resp) => setDataTable(prevState => ({ ...prevState, labels: resp.dateHistory, datasets: [{ label: asset, data: resp.priceHistory }] })));
+    // getAssetsIcon().then((resp) => console.log('icons', resp));
   }, []);
-  const date = dataTable?.map((aset) => aset?.time_close);
-  const asets = dataTable?.map((aset) => aset?.price_close);
 
-  const initAsets = {
-    labels: date && date,
-    datasets: [
-      {
-        label: 'BTC USD',
-        data: asets && asets
-      }
-    ]
-  };
   return (
     <div>
-      <Line data={initAsets}/>
+        <Line data={dataTable} />
     </div>
   );
+};
+
+Table.defaultProps = {
+  asset: Constants.DEFAULT_ASSET
+};
+
+Table.propTypes = {
+  asset: PropTypes.string.isRequired
 };
 
 export default Table;
