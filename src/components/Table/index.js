@@ -7,13 +7,14 @@ import * as Constants from '../../constants';
 
 const Table = ({ asset }) => {
   const [assetData, setAssetData] = useState([{}]);
+  const [assetIcon, setAssetIcon] = useState(null);
   const [dataTable, setDataTable] = useState({ labels: [], datasets: [{ label: asset, data: [] }] });
 
   useEffect(() => {
     getAssetInformation(asset).then((resp) => setAssetData(resp));
     getAssetHistoryValues(asset, Constants.timeInterval.WEEK)
       .then((resp) => setDataTable(prevState => ({ ...prevState, labels: resp.dateHistory, datasets: [{ label: asset, data: resp.priceHistory }] })));
-    // getAssetsIcon().then((resp) => console.log('icons', resp));
+    getAssetsIcon().then((resp) => setAssetIcon(resp.filter(icon => icon.asset_id === asset)));
   }, []);
 
   return (

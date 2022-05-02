@@ -15,8 +15,8 @@ export const getAssetInformation = async (asset = Constants.DEFAULT_ASSET) => {
   return response.data;
 };
 
-export const getAssetsIcon = async () => {
-  const url = `${Constants.URL}assets/icons`;
+export const getAssetsIcon = async (asset = Constants.DEFAULT_ASSET) => {
+  const url = `${Constants.URL}assets/icons/${asset}`;
   const response = await axios.get(url, options);
 
   return response.data;
