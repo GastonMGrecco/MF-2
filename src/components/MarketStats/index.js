@@ -1,17 +1,25 @@
-import React from 'react';
+import React, {/* useEffect, useState */} from 'react';
 import './index.css';
+import { getAssetInformation } from '../../services/assets.services';
+
 const MarketStats = () => {
+  // const [infoAsset, setInfoAsset] = useState({});
+
+  // useEffect(() => {
+  //   setInfoAsset(getAssetInformation('BTC').then((resp) => setInfoAsset(resp)));
+  // }, []);
+
   return (
     <div className='Market'>
-      <h1>Market Stats</h1>
+      <h1>Market Stats:  {/*infoAsset[0]?.name*/}</h1>
       <div className='act0'>
         <h3>CAPITALIZACION BURSATIL</h3>
         <p>15 5T MXN</p>
         <span>33% del mercado de criptomonedas</span>
       </div>
       <div className='act0'>
-        <h3>VOLUMEN (04H)</h3>
-        <p>684.4B MXN 19.0M BTC</p>
+        <h3>VOLUMEN (24H)</h3>
+        <p>{/*Math.round((infoAsset[0]?.price_usd + Number.EPSILON) * 100) / 100*/} USD {/*Math.round((infoAsset[0]?.volume_1day_usd + Number.EPSILON) * 100) / 100*/} BTC</p>
         <span>+4.84%</span>
       </div>
       <div className='act0'>
@@ -32,11 +40,11 @@ const MarketStats = () => {
       </div>
       <div className='act2'>
         <h3>POPULARIDAD</h3>
-        <p>#1</p>
+        <p>#{/*infoAsset[0]?.type_is_crypto*/}</p>
       </div>
       <div className='act3'>
         <h3>MAXIMO HISTORICO</h3>
-        <p>1.4M MXN</p>
+        <p>1.4M USD</p>
       </div>
       <div className='act3'>
         <h3>CAMBIO DE PRECIO (1h)</h3>
