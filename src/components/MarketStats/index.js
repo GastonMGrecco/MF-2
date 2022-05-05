@@ -1,17 +1,12 @@
-import React, {/* useEffect, useState */} from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
+import * as Constants from '../../constants';
 import './index.css';
-import { getAssetInformation } from '../../services/assets.services';
 
-const MarketStats = () => {
-  // const [infoAsset, setInfoAsset] = useState({});
-
-  // useEffect(() => {
-  //   setInfoAsset(getAssetInformation('BTC').then((resp) => setInfoAsset(resp)));
-  // }, []);
-
+const MarketStats = ({ dataInfo }) => {
   return (
     <div className='Market'>
-      <h1>Market Stats:  {/*infoAsset[0]?.name*/}</h1>
+      <h1>Market Stats:  {dataInfo[0]?.name}</h1>
       <div className='act0'>
         <h3>CAPITALIZACION BURSATIL</h3>
         <p>15 5T MXN</p>
@@ -19,7 +14,7 @@ const MarketStats = () => {
       </div>
       <div className='act0'>
         <h3>VOLUMEN (24H)</h3>
-        <p>{/*Math.round((infoAsset[0]?.price_usd + Number.EPSILON) * 100) / 100*/} USD {/*Math.round((infoAsset[0]?.volume_1day_usd + Number.EPSILON) * 100) / 100*/} BTC</p>
+        <p>{Math.round((dataInfo[0]?.price_usd + Number.EPSILON) * 100) / 100} USD {Math.round((dataInfo[0]?.volume_1day_usd + Number.EPSILON) * 100) / 100} BTC</p>
         <span>+4.84%</span>
       </div>
       <div className='act0'>
@@ -40,7 +35,7 @@ const MarketStats = () => {
       </div>
       <div className='act2'>
         <h3>POPULARIDAD</h3>
-        <p>#{/*infoAsset[0]?.type_is_crypto*/}</p>
+        <p>#{dataInfo[0]?.type_is_crypto}</p>
       </div>
       <div className='act3'>
         <h3>MAXIMO HISTORICO</h3>
@@ -61,5 +56,11 @@ const MarketStats = () => {
     </div>
   );
 };
+MarketStats.defaultProps = {
+  dataInfo: Constants.dataInfoExample
+};
 
+MarketStats.propTypes = {
+  dataInfo: PropTypes.array.isRequired
+};
 export default MarketStats;
